@@ -1,8 +1,25 @@
 // here we import the request module:- https://www.npmjs.com/package/request
 const request = require('request');
+const yargs = require('yargs');
 const k = 'AIzaSyA1F8VE-8m-2PL_urvPFtFunoEVzX9CCIc';
+
+const argv = yargs
+          .options({
+            a:{
+              demand: true,
+              alias: 'address',
+              describe: 'Address to fetch weather for',
+              string: true
+            }
+          })
+          .help()
+          .alias('help','h')
+          .argv;
+
+    //console.log(argv);
+    var encodedAddress = encodeURIComponent(argv.a); // here encodeURIComponent change the 'Dixit Kumar' to 'Dixit%20Kumar'
 request({
-  url:`https://maps.googleapis.com/maps/api/geocode/json?address=462021%20anand%20nagar%20bhopal,+CA&key=${k}`,
+  url:`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress},+CA&key=${k}`,
 
   json: true
 },(error,response,body) => {
