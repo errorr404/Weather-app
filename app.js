@@ -1,8 +1,7 @@
 // here we import the request module:- https://www.npmjs.com/package/request
 const yargs = require('yargs');
 const geocode = require('./geocode/geocode');
-const request = require('request');
-
+const weather = require('./weather/weather');
 const argv = yargs
           .options({
             a:{
@@ -26,25 +25,16 @@ const argv = yargs
       else {
         console.log(JSON.stringify(result,undefined,2));
       //  console.log(`https://api.darksky.net/forecast/5cfc84e0ce6384cf83b839aedd5668cd/${result.Latitude},${result.Longitude}`);
-        request({
-
-          url:`https://api.darksky.net/forecast/5cfc84e0ce6384cf83b839aedd5668cd/${result.Latitude},${result.Longitude}`,
-
-          json: true
-        },(error,response,body) => {
-          if(error) {
-            console.log('Unable to connect to the forecast.io server');
-          }
-          else if(response.statusCode === 400)
+      weather.getWeather(result.Latitude,result.Longitude,(errorMessage,result)=>{
+        if(errorMessage)
+        {
+          console.log(errorMessage);
+        }
+        else {
           {
-            console.log('Unable to fetch Weather');
+            console.log(`It's currently ${result.temprature}`);
           }
-          else if(response.statusCode === 200)
-          {
-            console.log(body.currently.temperature);
-          }
-
-
+        }
       });
     }
   });
