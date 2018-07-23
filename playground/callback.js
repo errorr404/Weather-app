@@ -1,8 +1,9 @@
+
 var getUser =(id,callback) => {
    var user ={
 
      id:id,
-     name:'Dixit'
+     name:'Dixit',
    };
 
    setTimeout(()=>{
