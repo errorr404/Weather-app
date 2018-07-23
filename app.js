@@ -25,7 +25,19 @@ request({
 },(error,response,body) => {
   //console.log('statusCode:', response && response.statusCode);
 //  console.log(JSON.stringify(body,undefined,2));  // for JSON.stringify(--,--,--) goto:-https://www.dyn-web.com/tutorials/php-js/json/filter.php
-   console.log(`Location: ${body.results[0].formatted_address}`);
-   console.log(`Lat: ${body.results[0].geometry.location.lat}`);
-   console.log(`Lng: ${body.results[0].geometry.location.lng}`);
+  if(error)
+  {
+    console.log('Unable to connect to the Google server.');
+  }
+  else if(body.status === 'ZERO_RESULTS')
+  {
+    console.log('Unable to find that address.')
+  }
+  else if(body.status === 'OK')
+  {
+    console.log(`Location: ${body.results[0].formatted_address}`);
+    console.log(`Lat: ${body.results[0].geometry.location.lat}`);
+    console.log(`Lng: ${body.results[0].geometry.location.lng}`);
+  }
+ else console.log('error occours');
 });
