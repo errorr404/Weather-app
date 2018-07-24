@@ -1,4 +1,46 @@
+var asynAdd = (a,b) =>{
+  return new Promise((resolve,reject) => {
+    setTimeout(()=>{
+      if(typeof a ==='number' && typeof b ==='number')
+      {
+        resolve(a+b);
+      }
+      else {
+        {
+          reject('arguments must be numbers');
+        }
+      }
+    },1500);
+  });
+};
 
+asynAdd(5,7).then((result) => {
+ console.log('result: ',result);
+ // here we call another Promise
+   return asynAdd(result,18);
+}).then((result) => {
+ console.log('sum is ',result);
+}).catch((errorMsg) => {
+  console.log(errorMsg);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 // here we declear the Promise
 
 var somePromise = new Promise((resolve,reject)=>{
@@ -15,3 +57,4 @@ console.log(`success: ${message}`);
 },(errorMsg)=>{
   console.log(`Error Occour: ${errorMsg}`);
 });
+*/
